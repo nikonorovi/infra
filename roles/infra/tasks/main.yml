@@ -1,0 +1,38 @@
+---
+- name: install base soft
+  apt:
+    name: '{{ item }}'
+    state: latest
+  with_items:
+    - python
+    - htop
+    - python-pip
+    - mc
+    - vim
+    - net-tools
+    - iptables-persistent
+    - netfilter-persistent
+    - ncdu
+    - fping
+    - fail2ban
+    - apt-transport-https
+    - software-properties-common
+    - mlocate
+    - ntp
+    - less
+    - iotop
+    - tmux
+    - wget
+    - curl
+    - rsync
+    - dnsutils
+    - pigz
+
+- name: Set Firewall Rules
+  copy: src={{ iptables_file }} dest=/etc/iptables/rules.v4 owner=root group=root mode=644
+  notify:
+    - Restart Iptables Persistent
+
+- name: configure fail2ban local jails
+  action: template src=jail.local.j2 dest=/etc/fail2ban/jail.local mode=0644
+  notify: Restart Fail2Ban

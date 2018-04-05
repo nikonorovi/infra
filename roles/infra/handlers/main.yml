@@ -1,0 +1,13 @@
+
+---
+- name: Start Iptables Persistent
+  service: name=netfilter-persistent state=started
+
+- name: Restart Iptables Persistent
+  service: name=netfilter-persistent state=restarted
+
+- name: Start Fail2Ban
+  service: name=fail2ban state=started
+
+- name: Restart Fail2Ban
+  service: name=fail2ban state=restarted
