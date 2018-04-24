@@ -1,7 +1,8 @@
 ---
 - hosts: all
-  tasks:
-  - name: install python 2
-    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+  gather_facts: false
+  pre_tasks:
+  - name: Install python2 for Ansible
+    raw: bash -c "test -e /usr/bin/python || (apt -qqy update && apt install -qqy python-minimal)"
   roles:
     - { role: infra }
